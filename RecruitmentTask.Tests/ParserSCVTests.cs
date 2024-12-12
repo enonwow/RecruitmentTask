@@ -1,4 +1,5 @@
-﻿using RecruitmentTask.Console.Parser;
+﻿using CsvHelper;
+using RecruitmentTask.Console.Parser;
 using Xunit;
 
 namespace RecruitmentTask.Tests
@@ -6,7 +7,7 @@ namespace RecruitmentTask.Tests
     public class ParserSCVTests
     {
         [Fact]
-        public async Task Parser_TryGetPath_ThrowException()
+        public async Task Parser_TryGetPath_DirectoryNotFoundException()
         {
             await Assert.ThrowsAsync<DirectoryNotFoundException>(async () =>
             {
@@ -22,7 +23,23 @@ namespace RecruitmentTask.Tests
         }
 
         [Fact]
-        public async Task Parser_ReadEmployeesData()
+        public async Task Parser_TrySerialize_HeaderValidationException()
+        {
+            await Assert.ThrowsAsync<HeaderValidationException>(async () =>
+            {
+                var parser = new ParserCSV();
+
+                var nullData = parser.ReadEmployeesAsync(@"Files\test_wrong_data.csv");
+
+                await foreach (var item in nullData)
+                {
+
+                }
+            });
+        }
+
+        [Fact]
+        public async Task Parser_ReadEmployeesData_Successful()
         {
             var parser = new ParserCSV();
 
