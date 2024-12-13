@@ -1,9 +1,9 @@
 ﻿using CsvHelper.Configuration;
 using RecruitmentTask.Core;
 
-namespace RecruitmentTask.Console.Parser.Mapers
+namespace RecruitmentTask.Utility.Mapers
 {
-    public class EmployeeMap : ClassMap<Employee>
+    internal class EmployeeMap : ClassMap<Employee>
     {
         public EmployeeMap()
         {

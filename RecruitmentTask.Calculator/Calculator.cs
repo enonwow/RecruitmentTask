@@ -12,10 +12,7 @@ namespace RecruitmentTask.Calculator
 
         public async Task PrepareData(IAsyncEnumerable<Employee> employees)
         {
-            if (employees == null)
-            {
-                throw new ArgumentNullException(nameof(employees));
-            }
+            ArgumentNullException.ThrowIfNull(employees);
 
             await foreach (var employee in employees)
             {

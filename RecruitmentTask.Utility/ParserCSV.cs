@@ -1,12 +1,12 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using RecruitmentTask.Console.Abstractions;
-using RecruitmentTask.Console.Parser.Mapers;
 using RecruitmentTask.Core;
+using RecruitmentTask.Utility.Abstractions;
+using RecruitmentTask.Utility.Mapers;
 using System.Globalization;
 using System.Text;
 
-namespace RecruitmentTask.Console.Parser
+namespace RecruitmentTask.Utility
 {
     public class ParserCSV : IParserCSV
     {

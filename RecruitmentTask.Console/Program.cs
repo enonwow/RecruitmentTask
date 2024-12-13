@@ -1,6 +1,6 @@
 ﻿using RecruitmentTask.Calculator;
 using RecruitmentTask.Calculator.Models;
-using RecruitmentTask.Console.Parser;
+using RecruitmentTask.Utility;
 
 var parser = new ParserCSV();
 var employees = parser.ReadEmployeesAsync(@"Files\zadanie_soft_dev_PxCW.csv");

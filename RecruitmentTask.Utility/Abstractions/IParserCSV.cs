@@ -1,6 +1,6 @@
 ﻿using RecruitmentTask.Core;
 
-namespace RecruitmentTask.Console.Abstractions
+namespace RecruitmentTask.Utility.Abstractions
 {
     public interface IParserCSV
     {

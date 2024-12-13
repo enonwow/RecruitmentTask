@@ -1,5 +1,5 @@
 ﻿using CsvHelper;
-using RecruitmentTask.Console.Parser;
+using RecruitmentTask.Utility;
 using Xunit;
 
 namespace RecruitmentTask.Tests
