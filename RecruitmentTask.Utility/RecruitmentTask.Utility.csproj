@@ -14,13 +14,4 @@
     <ProjectReference Include="..\RecruitmentTask.Core\RecruitmentTask.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Files\test_data.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Files\test_wrong_data.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
