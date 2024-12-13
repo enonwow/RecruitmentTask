@@ -1,8 +1,8 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using RecruitmentTask.Console.Abstractions;
-using RecruitmentTask.Console.Models;
 using RecruitmentTask.Console.Parser.Mapers;
+using RecruitmentTask.Core;
 using System.Globalization;
 using System.Text;
 

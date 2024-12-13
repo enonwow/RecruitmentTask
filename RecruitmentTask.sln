@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Console", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Tests", "RecruitmentTask.Tests\RecruitmentTask.Tests.csproj", "{4172EC0A-A8F2-4F16-B8FA-B1F19C4B115C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Calculator", "RecruitmentTask.Calculator\RecruitmentTask.Calculator.csproj", "{CA15F821-8A0D-4E12-8EBA-E89085533401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Core", "RecruitmentTask.Core\RecruitmentTask.Core.csproj", "{549854C3-74C5-48EA-833A-DBBA880F130E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{4172EC0A-A8F2-4F16-B8FA-B1F19C4B115C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4172EC0A-A8F2-4F16-B8FA-B1F19C4B115C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4172EC0A-A8F2-4F16-B8FA-B1F19C4B115C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA15F821-8A0D-4E12-8EBA-E89085533401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA15F821-8A0D-4E12-8EBA-E89085533401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA15F821-8A0D-4E12-8EBA-E89085533401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA15F821-8A0D-4E12-8EBA-E89085533401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{549854C3-74C5-48EA-833A-DBBA880F130E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{549854C3-74C5-48EA-833A-DBBA880F130E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{549854C3-74C5-48EA-833A-DBBA880F130E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{549854C3-74C5-48EA-833A-DBBA880F130E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

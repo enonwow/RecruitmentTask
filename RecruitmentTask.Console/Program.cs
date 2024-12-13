@@ -1,42 +1,12 @@
-﻿using RecruitmentTask.Console.Models;
+﻿using RecruitmentTask.Calculator;
+using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Console.Parser;
 
 var parser = new ParserCSV();
 var employees = parser.ReadEmployeesAsync(@"Files\zadanie_soft_dev_PxCW.csv");
 
-var HighestSalaryByCity = new Dictionary<string, List<Employee>>();
-var HighestSalaryByJobLevel = new Dictionary<string, List<Employee>>();
-
-await foreach (var employee in employees)
-{
-    var city = employee.City;
-    var jobLevel = employee.JobLevel;
-    var salary = employee.Salary;
-
-    if (!HighestSalaryByCity.TryGetValue(city, out var cityValue) || cityValue.First().Salary < salary)
-    {
-        HighestSalaryByCity[city] = new List<Employee>
-        {
-            employee
-        };
-    }
-    else if (cityValue.First().Salary == salary)
-    {
-        cityValue.Add(employee);
-    }
-
-    if (!HighestSalaryByJobLevel.TryGetValue(jobLevel, out var jobLevelValue) || jobLevelValue.First().Salary < salary)
-    {
-        HighestSalaryByJobLevel[jobLevel] = new List<Employee>
-        {
-            employee
-        };
-    }
-    else if (jobLevelValue.First().Salary == salary)
-    {
-        jobLevelValue.Add(employee);
-    }
-}
+var calcultor = new Calculator();
+await calcultor.PrepareData(employees);
 
 DisplayOptions();
 
@@ -49,6 +19,7 @@ void DisplayOptions()
         Console.WriteLine("==============================================");
         Console.WriteLine("1 - Wyświetl najwyższe wynagrodzenie względem miasta");
         Console.WriteLine("2 - Wyświetl najwyższe wynagrodzenie na danym stanowisku");
+        Console.WriteLine("3 - Wyświetl najniżesz wynagrodzenie po podatku dla danego miasta");
         Console.WriteLine("9 - Wyjście z aplikacji");
         Console.WriteLine("");
         Console.Write("Wybierz opcję: ");
@@ -60,10 +31,13 @@ void DisplayOptions()
         switch (keyChar)
         {
             case '1':
-                DisplayData(HighestSalaryByCity);
+                DisplayData(calcultor.GetHighestSalaryByCity());
                 break;
             case '2':
-                DisplayData(HighestSalaryByJobLevel);
+                DisplayData(calcultor.GetHighestSalaryByJobLevel());
+                break;
+            case '3':
+                DisplayData(calcultor.GetTaxSalaryByCity());
                 break;
         }
 
@@ -72,14 +46,11 @@ void DisplayOptions()
     while (keyChar != '9');
 }
 
-void DisplayData(Dictionary<string, List<Employee>> data)
+void DisplayData(List<EmployeeDTO> employees)
 {
-    foreach (var item in data.Values)
+    foreach (var employee in employees)
     {
-        foreach (var e in item)
-        {
-            Console.WriteLine($"Imię: {e.Name}, Nazwisko: {e.Surname}, Wynagrodzenie: {e.Salary}, " +
-                $"Stanowisko: {e.JobLevel}, Miasto: {e.City}");
-        }
+        Console.WriteLine($"Imię: {employee.Name}, Nazwisko: {employee.Surname}, Wynagrodzenie: {employee.Salary}, " +
+            $"Stanowisko: {employee.JobLevel}, Miasto: {employee.City}");
     }
 }

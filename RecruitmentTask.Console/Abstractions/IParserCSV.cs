@@ -1,4 +1,4 @@
-﻿using RecruitmentTask.Console.Models;
+﻿using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Console.Abstractions
 {

@@ -1,5 +1,5 @@
 ﻿using CsvHelper.Configuration;
-using RecruitmentTask.Console.Models;
+using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Console.Parser.Mapers
 {

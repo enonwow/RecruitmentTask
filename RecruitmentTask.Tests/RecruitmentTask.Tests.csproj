@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RecruitmentTask.Calculator\RecruitmentTask.Calculator.csproj" />
     <ProjectReference Include="..\RecruitmentTask.Console\RecruitmentTask.Console.csproj" />
   </ItemGroup>
 

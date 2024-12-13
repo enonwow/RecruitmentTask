@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Sql\" />
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <ProjectReference Include="..\RecruitmentTask.Calculator\RecruitmentTask.Calculator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
