@@ -12,20 +12,22 @@ namespace RecruitmentTask.Calculator.Rulers
             var netSalary = employee.Salary - (employee.Salary * (decimal)0.19);
 
             if (!ReulerCollecetion.TryGetValue(city, out var netSalaryValue) 
-                || netSalaryValue.First().Salary > netSalary)
+                || netSalaryValue.First().NetSalary > netSalary)
             {
-                employee.Salary = netSalary;
-
                 ReulerCollecetion[city] = new List<EmployeeDTO>
                 {
                     new EmployeeDTO(employee)
+                    {
+                        NetSalary = netSalary,
+                    }
                 };
             }
-            else if (netSalaryValue.First().Salary == netSalary)
+            else if (netSalaryValue.First().NetSalary == netSalary)
             {
-                employee.Salary = netSalary;
-
-                netSalaryValue.Add(new EmployeeDTO(employee));
+                netSalaryValue.Add(new EmployeeDTO(employee)
+                {
+                    NetSalary = netSalary
+                });
             }
         }
     }

@@ -1,10 +1,11 @@
-﻿using RecruitmentTask.Calculator.Models;
+﻿using RecruitmentTask.Calculator.Abstractions;
+using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Calculator.Rulers;
 using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Calculator
 {
-    public class Calculator
+    public class Calculator : ICalculator
     {
         private readonly RulerHighestSalaryByCity RulerHighestSalaryByCity = new RulerHighestSalaryByCity();
         private readonly RulerHighestSalaryByJobLevel RulerHighestSalaryByJobLevel = new RulerHighestSalaryByJobLevel();
@@ -16,9 +17,11 @@ namespace RecruitmentTask.Calculator
 
             await foreach (var employee in employees)
             {
-                RulerHighestSalaryByCity.Validate(employee);
-                RulerHighestSalaryByJobLevel.Validate(employee);
-                RulerTaxSalaryByCity.Validate(employee);
+                var employeeCopy = employee.ShallowCopy();
+
+                RulerHighestSalaryByCity.Validate(employeeCopy);
+                RulerHighestSalaryByJobLevel.Validate(employeeCopy);
+                RulerTaxSalaryByCity.Validate(employeeCopy);
             }
         }
 
