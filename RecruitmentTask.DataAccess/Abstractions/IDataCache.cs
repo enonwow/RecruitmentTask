@@ -7,6 +7,8 @@ namespace RecruitmentTask.DataAccess.Abstractions
     {
         List<Employee> GetFullData();
         void SetFullData(List<Employee> employees);
+        List<EmployeeDTO> GetFullDataDTO();
+        void SetFullDataDTO(List<EmployeeDTO> employees);
         bool TryGetValueHighestSalaryByCity(out List<EmployeeDTO> employees);
         void SetHighestSalaryByCity(List<EmployeeDTO> employees);
         bool TryGetValueHighestSalaryByJobLevel(out List<EmployeeDTO> employees);

@@ -10,6 +10,7 @@ namespace RecruitmentTask.DataAccess
         private readonly IMemoryCache _memoryCache;
 
         private const string FullData = "FullData";
+        private const string FullDataDTO = "FullDataDTO";
         private const string HighestSalaryByCity = "HighestSalaryByCity";
         private const string HighestSalaryByJobLevel = "HighestSalaryByJobLevel";
         private const string TaxSalaryByCity = "TaxSalaryByCity";
@@ -42,6 +43,15 @@ namespace RecruitmentTask.DataAccess
             {
                 _memoryCache.Remove(TaxSalaryByCity);
             }
+        }
+        public List<EmployeeDTO> GetFullDataDTO()
+        {
+            return _memoryCache.Get<List<EmployeeDTO>>(FullDataDTO);
+        }
+
+        public void SetFullDataDTO(List<EmployeeDTO> employees)
+        {
+            _memoryCache.Set(FullDataDTO, employees);
         }
 
         public bool TryGetValueHighestSalaryByCity(out List<EmployeeDTO> employees)

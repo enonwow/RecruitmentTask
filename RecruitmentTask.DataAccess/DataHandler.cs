@@ -33,8 +33,14 @@ namespace RecruitmentTask.DataAccess
                     new EmployeeDTO(employee)
                 );
             }
+            _dataCache.SetFullDataDTO(employeesDTO);
 
             return employeesDTO;
+        }
+        
+        public List<EmployeeDTO> GetAllEmployeesFromCache()
+        {
+            return _dataCache.GetFullDataDTO();
         }
 
         public List<EmployeeDTO> GetHighestSalaryByCity()

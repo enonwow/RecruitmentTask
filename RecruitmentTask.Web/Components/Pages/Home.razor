@@ -1,8 +1,8 @@
 ﻿@page "/"
+@using CsvHelper
 @using Microsoft.AspNetCore.Components.Forms
 @using RecruitmentTask.Calculator.Models
 @using RecruitmentTask.DataAccess.Abstractions
-@* @attribute [StreamRendering] *@
 @inject IDataHandler DataHandler
 @rendermode InteractiveServer
 
@@ -10,20 +10,74 @@
 
 <InputFile OnChange="OnChangeFileAsync" accept=".csv" />
 
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p style="color: red;">@errorMessage</p>
+}
+
 @if (employees != null)
 {
+    <p> Wybierz filtr:
+        <select @onchange="OnChangeDropDown">
+            @foreach (var filter in filters)
+            {
+                <option value="@filter.Id">@filter.Name</option>
+            }
+        </select>
+    </p>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Lp</th>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>Zarobki</th>
-                <th>Poziom stanowiska</th>
-                <th>Miejsce zmieszkania</th>
+                <th @onclick='() => SortBy("Id")'>Lp
+                    @if (currentColumn == "Id")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
+
+                <th @onclick='() => SortBy("Name")'>Imię
+                    @if (currentColumn == "Name")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
+
+                <th @onclick='() => SortBy("Surname")'>Nazwisko
+                    @if (currentColumn == "Surname")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
+
+                <th @onclick='() => SortBy("Salary")'>Zarobki
+                    @if (currentColumn == "Salary")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
+
+                <th @onclick='() => SortBy("JobLevel")'>Poziom stanowiska
+                    @if (currentColumn == "JobLevel")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
+
+                <th @onclick='() => SortBy("City")'>Miejsce zmieszkania
+                    @if (currentColumn == "City")
+                    {
+                        <span>@(isAscending ? " ↓" : " ↑")</span>
+                    }
+                </th>
                 @if (showNetSalary)
                 {
-                    <th>Zarobki netto</th>
+                    <th @onclick='() => SortBy("NetSalary")'>Zarobki netto
+                        @if (currentColumn == "NetSalary")
+                        {
+                            <span>@(isAscending ? " ↓" : " ↑")</span>
+                        }
+                    </th>
                 }
             </tr>
         </thead>
@@ -49,25 +103,120 @@
 
 @code {
     private List<EmployeeDTO>? employees;
-    private bool showNetSalary = true;
+    private bool showNetSalary = false;
+    private string errorMessage = "";
 
-    protected override async Task OnInitializedAsync()
+    private string currentColumn = "Id";
+    private bool isAscending = true;
+
+    private List<Filter> filters = new List<Filter>()
     {
+        new Filter(0, "Brak"),
+        new Filter(1, "Najwyższe zarobki względem miasta"),
+        new Filter(2, "Najwyższe zarobki względem poziomu stanowiska"),
+        new Filter(3, "Najmniejsze zarobki netto względem miasta")
+    };
 
+    private class Filter
+    {
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+
+        public Filter(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 
     private async Task OnChangeFileAsync(InputFileChangeEventArgs e)
     {
         try
         {
+            errorMessage = "";
+
             await using var stream = e.File.OpenReadStream();
 
             employees = await DataHandler
                 .GetEmployeesAsync(stream);
         }
+        catch (HeaderValidationException)
+        {
+            errorMessage = "Zły format pliku";
+        }
         catch (Exception)
         {
             throw;
         }
+    }
+
+    private void OnChangeDropDown(ChangeEventArgs e)
+    {
+        int selectedId = Convert.ToInt32(e.Value);
+
+        switch(selectedId)
+        {
+            case 0:
+                employees = DataHandler.GetAllEmployeesFromCache();
+                showNetSalary = false;
+                break;
+            case 1:
+                employees = DataHandler.GetHighestSalaryByCity();
+                showNetSalary = false;
+                break;
+            case 2:
+                employees = DataHandler.GetHighestSalaryByJobLevel();
+                showNetSalary = false;
+                break;
+            case 3:
+                employees = DataHandler.GetTaxSalaryByCity();
+                showNetSalary = true;
+                break;
+        }
+    }
+
+    private void SortBy(string column)
+    {
+        if (currentColumn == column)
+        {
+            isAscending = !isAscending;
+        }
+        else
+        {
+            currentColumn = column;
+            isAscending = true;
+        }
+
+        switch(column)
+        {
+            case "Id":
+                SortData(p => p.Id);
+                break;
+            case "Name":
+                SortData(p => p.Name);
+                break;
+            case "Surname":
+                SortData(p => p.Surname);
+                break;
+            case "Salary":
+                SortData(p => p.Salary);
+                break;
+            case "JobLevel":
+                SortData(p => p.JobLevel);
+                break;
+            case "City":
+                SortData(p => p.City);
+                break;
+            case "NetSalary":
+                SortData(p => p.NetSalary);
+                break;
+        }
+    }
+
+    private void SortData(Func<EmployeeDTO, object> func)
+    {
+        employees = isAscending
+            ? employees.OrderBy(func).ToList()
+            : employees.OrderByDescending(func).ToList();
     }
 }
