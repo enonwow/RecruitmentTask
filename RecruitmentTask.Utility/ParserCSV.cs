@@ -10,7 +10,7 @@ namespace RecruitmentTask.Utility
 {
     public class ParserCSV : IParserCSV
     {
-        public async IAsyncEnumerable<Employee> ReadEmployeesAsync(string path)
+        public async Task<List<Employee>> ReadEmployeesAsync(string path)
         {
             var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
 
@@ -27,10 +27,7 @@ namespace RecruitmentTask.Utility
 
             var employees = csv.GetRecordsAsync<Employee>();
 
-            await foreach (var employee in employees)
-            {
-                yield return employee;
-            }
+            return await employees.ToListAsync();
         }
     }
 }

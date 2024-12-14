@@ -4,6 +4,6 @@ namespace RecruitmentTask.Utility.Abstractions
 {
     public interface IParserCSV
     {
-        IAsyncEnumerable<Employee> ReadEmployeesAsync(string path);
+        Task<List<Employee>> ReadEmployeesAsync(string path);
     }
 }

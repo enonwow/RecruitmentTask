@@ -13,9 +13,9 @@ namespace RecruitmentTask.Tests
             {
                 var parser = new ParserCSV();
 
-                var nullData = parser.ReadEmployeesAsync("Wrong path");
+                var nullData = await parser.ReadEmployeesAsync("Wrong path");
 
-                await foreach (var item in nullData)
+                foreach (var item in nullData)
                 {
 
                 }
@@ -29,9 +29,9 @@ namespace RecruitmentTask.Tests
             {
                 var parser = new ParserCSV();
 
-                var nullData = parser.ReadEmployeesAsync(@"Files\test_wrong_data.csv");
+                var nullData = await parser.ReadEmployeesAsync(@"Files\test_wrong_data.csv");
 
-                await foreach (var item in nullData)
+                foreach (var item in nullData)
                 {
 
                 }
@@ -43,8 +43,8 @@ namespace RecruitmentTask.Tests
         {
             var parser = new ParserCSV();
 
-            var employees = parser.ReadEmployeesAsync(@"Files\test_data.csv");
-            var emplyee = await employees.FirstAsync();
+            var employees = await parser.ReadEmployeesAsync(@"Files\test_data.csv");
+            var emplyee = employees.First();
 
             Assert.Equal(1, emplyee.Id);
             Assert.Equal("Bogumił Pietrzak", emplyee.Name);

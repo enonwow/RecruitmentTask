@@ -16,13 +16,5 @@ namespace RecruitmentTask.Tests
                 JobLevel = "S1"
             };
         }
-
-        public static async IAsyncEnumerable<Employee> PrepareTestData(List<Employee> employees)
-        {
-            foreach (var employee in employees)
-            {
-                yield return employee;
-            }
-        }
     }
 }

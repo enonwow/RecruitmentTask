@@ -5,7 +5,7 @@ using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Calculator
 {
-    public class Calculator : ICalculator
+    public class FilterCalculator : ICalculator
     {
         private readonly RulerHighestSalaryByCity RulerHighestSalaryByCity = new RulerHighestSalaryByCity();
         private readonly RulerHighestSalaryByJobLevel RulerHighestSalaryByJobLevel = new RulerHighestSalaryByJobLevel();
@@ -13,8 +13,6 @@ namespace RecruitmentTask.Calculator
 
         public async Task PrepareData(IAsyncEnumerable<Employee> employees)
         {
-            ArgumentNullException.ThrowIfNull(employees);
-
             await foreach (var employee in employees)
             {
                 var employeeCopy = employee.ShallowCopy();
@@ -25,25 +23,43 @@ namespace RecruitmentTask.Calculator
             }
         }
 
-        public List<EmployeeDTO> GetHighestSalaryByCity()
+        public IEnumerable<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<Employee> employees)
         {
+            foreach (var employee in employees)
+            {
+                var employeeCopy = employee.ShallowCopy();
+
+                RulerHighestSalaryByCity.Validate(employeeCopy);
+            }
+
             return RulerHighestSalaryByCity
-                .GetEmployees()
-                .ToList();
+                .GetEmployees();
         }
 
-        public List<EmployeeDTO> GetHighestSalaryByJobLevel()
+        public IEnumerable<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<Employee> employees)
         {
+            foreach (var employee in employees)
+            {
+                var employeeCopy = employee.ShallowCopy();
+
+                RulerHighestSalaryByJobLevel.Validate(employeeCopy);
+            }
+
             return RulerHighestSalaryByJobLevel
-                .GetEmployees()
-                .ToList();
+                .GetEmployees();
         }
         
-        public List<EmployeeDTO> GetTaxSalaryByCity()
+        public IEnumerable<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<Employee> employees)
         {
+            foreach (var employee in employees)
+            {
+                var employeeCopy = employee.ShallowCopy();
+
+                RulerTaxSalaryByCity.Validate(employeeCopy);
+            }
+
             return RulerTaxSalaryByCity
-                .GetEmployees()
-                .ToList();
+                .GetEmployees();
         }
     }
 }

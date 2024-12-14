@@ -1,29 +1,17 @@
-﻿using RecruitmentTask.Calculator.Models;
+﻿using RecruitmentTask.Calculator;
+using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Core;
 using RecruitmentTask.Tests.Comparers;
 using Xunit;
 
 namespace RecruitmentTask.Tests
 {
-    public class CalculatorTests
-    {
-        [Fact]
-        public async Task Calculator_TryPrepareData_ArgumentNullException()
-        {
-            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var calculator = new Calculator.Calculator();
-                await calculator.PrepareData(null);
-            });
-        }
-    }
-
     public class CalculatorTests_GetHighestSalaryByCity
     {
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_LowerFirst_Successful()
+        public void Calculator_GetHighestSalaryByCity_LowerFirst_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -44,19 +32,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetHighestSalaryByCity();
+            var result = calculator.GetHighestSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_Multiple_Successful()
+        public void Calculator_GetHighestSalaryByCity_Multiple_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -79,18 +63,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-            var result = calculator.GetHighestSalaryByCity();
+            var result = calculator.GetHighestSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_LowerSecond_Successful()
+        public void Calculator_GetHighestSalaryByCity_LowerSecond_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -111,19 +92,15 @@ namespace RecruitmentTask.Tests
                 }
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetHighestSalaryByCity();
+            var result = calculator.GetHighestSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_Successful()
+        public void Calculator_GetHighestSalaryByCity_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
 
             var firstEmployee = CalculatorTestUtility.CreateMockEmployee();
             var secondEmployee = new Employee
@@ -177,11 +154,7 @@ namespace RecruitmentTask.Tests
                 fourthEmployee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetHighestSalaryByCity();
+            var result = calculator.GetHighestSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
@@ -190,9 +163,9 @@ namespace RecruitmentTask.Tests
     public class CalculatorTests_RulerHighestSalaryByJobLevel()
     {
         [Fact]
-        public async Task Calculator_RulerHighestSalaryByJobLevel_LowerFirst_Successful()
+        public void Calculator_RulerHighestSalaryByJobLevel_LowerFirst_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -213,19 +186,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetHighestSalaryByJobLevel();
+            var result = calculator.GetHighestSalaryByJobLevel(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_RulerHighestSalaryByJobLevel_Multiple_Successful()
+        public void Calculator_RulerHighestSalaryByJobLevel_Multiple_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -248,18 +217,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-            var result = calculator.GetHighestSalaryByJobLevel();
+            var result = calculator.GetHighestSalaryByJobLevel(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_RulerHighestSalaryByJobLevel_LowerSecond_Successful()
+        public void Calculator_RulerHighestSalaryByJobLevel_LowerSecond_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -280,18 +246,15 @@ namespace RecruitmentTask.Tests
                 }
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-            var result = calculator.GetHighestSalaryByJobLevel();
+            var result = calculator.GetHighestSalaryByJobLevel(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_Successful()
+        public void Calculator_GetHighestSalaryByCity_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
 
             var firstEmployee = CalculatorTestUtility.CreateMockEmployee();
             var secondEmployee = new Employee
@@ -345,11 +308,7 @@ namespace RecruitmentTask.Tests
                 fourthEmployee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetHighestSalaryByCity();
+            var result = calculator.GetHighestSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
@@ -358,9 +317,9 @@ namespace RecruitmentTask.Tests
     public class CalculatorTests_RulerTaxSalaryByCity
     {
         [Fact]
-        public async Task Calculator_GetTaxSalaryByCity_LowerFirst_Successful()
+        public void Calculator_GetTaxSalaryByCity_LowerFirst_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -384,19 +343,15 @@ namespace RecruitmentTask.Tests
                 },
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetTaxSalaryByCity();
+            var result = calculator.GetTaxSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetTaxSalaryByCity_Multiple_Successful()
+        public void Calculator_GetTaxSalaryByCity_Multiple_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -425,18 +380,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-            var result = calculator.GetTaxSalaryByCity();
+            var result = calculator.GetTaxSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetTaxSalaryByCity_LowerSecond_Successful()
+        public void Calculator_GetTaxSalaryByCity_LowerSecond_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
             var employee = CalculatorTestUtility.CreateMockEmployee();
 
             var expected = new List<EmployeeDTO>()
@@ -460,19 +412,15 @@ namespace RecruitmentTask.Tests
                 employee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetTaxSalaryByCity();
+            var result = calculator.GetTaxSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }
 
         [Fact]
-        public async Task Calculator_GetHighestSalaryByCity_Successful()
+        public void Calculator_GetHighestSalaryByCity_Successful()
         {
-            var calculator = new Calculator.Calculator();
+            var calculator = new FilterCalculator();
 
             var firstEmployee = CalculatorTestUtility.CreateMockEmployee();
             var secondEmployee = new Employee
@@ -535,11 +483,7 @@ namespace RecruitmentTask.Tests
                 fourthEmployee
             };
 
-            var testData = CalculatorTestUtility.PrepareTestData(employees);
-
-            await calculator.PrepareData(testData);
-
-            var result = calculator.GetTaxSalaryByCity();
+            var result = calculator.GetTaxSalaryByCity(employees);
 
             Assert.Equal(expected, result, new EmployeeComparer());
         }

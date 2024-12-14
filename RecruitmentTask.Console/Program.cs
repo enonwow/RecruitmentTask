@@ -3,10 +3,9 @@ using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Utility;
 
 var parser = new ParserCSV();
-var employees = parser.ReadEmployeesAsync(@"Files\zadanie_soft_dev_PxCW.csv");
+var employees = await parser.ReadEmployeesAsync(@"Files\zadanie_soft_dev_PxCW.csv");
 
-var calcultor = new Calculator();
-await calcultor.PrepareData(employees);
+var calcultor = new FilterCalculator();
 
 DisplayOptions();
 
@@ -31,13 +30,13 @@ void DisplayOptions()
         switch (keyChar)
         {
             case '1':
-                DisplayData(calcultor.GetHighestSalaryByCity());
+                DisplayData(calcultor.GetHighestSalaryByCity(employees));
                 break;
             case '2':
-                DisplayData(calcultor.GetHighestSalaryByJobLevel());
+                DisplayData(calcultor.GetHighestSalaryByJobLevel(employees));
                 break;
             case '3':
-                DisplayData(calcultor.GetTaxSalaryByCity());
+                DisplayData(calcultor.GetTaxSalaryByCity(employees));
                 break;
         }
 
@@ -46,7 +45,7 @@ void DisplayOptions()
     while (keyChar != '9');
 }
 
-void DisplayData(List<EmployeeDTO> employees)
+void DisplayData(IEnumerable<EmployeeDTO> employees)
 {
     foreach (var employee in employees)
     {
