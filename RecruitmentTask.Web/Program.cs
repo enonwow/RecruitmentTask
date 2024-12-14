@@ -1,3 +1,9 @@
+using RecruitmentTask.Calculator;
+using RecruitmentTask.Calculator.Abstractions;
+using RecruitmentTask.DataAccess;
+using RecruitmentTask.DataAccess.Abstractions;
+using RecruitmentTask.Utility;
+using RecruitmentTask.Utility.Abstractions;
 using RecruitmentTask.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services
+    .AddSingleton<IDataHandler, DataHandler>()
+    .AddSingleton<IParserCSV, ParserCSV>()
+    .AddSingleton<IFilterCalculator, FilterCalculator>()
+    .AddSingleton<IDataCache, DataCache>()
+    .AddMemoryCache();
 
 var app = builder.Build();
 

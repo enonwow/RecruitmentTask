@@ -1,35 +1,45 @@
 ﻿@page "/weather"
-@attribute [StreamRendering]
+@using RecruitmentTask.Calculator.Models
+@using RecruitmentTask.DataAccess.Abstractions
+@* @attribute [StreamRendering] *@
+@inject IDataHandler DataHandler
+@rendermode InteractiveServer
 
-<PageTitle>Weather</PageTitle>
-
-<h1>Weather</h1>
-
-<p>This component demonstrates showing data.</p>
-
-@if (forecasts == null)
+@if (employees == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Wybierz plik</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Lp</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Zarobki</th>
+                <th>Poziom stanowiska</th>
+                <th>Miejsce zmieszkania</th>
+                @if (showNetSalary)
+                {
+                    <th>Zarobki netto</th>
+                }
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var employee in employees)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@employee.Id</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Surname</td>
+                    <td>@employee.Salary</td>
+                    <td>@employee.JobLevel</td>
+                    <td>@employee.City</td>
+                    @if (showNetSalary)
+                    {
+                        <td>@employee.NetSalary</td>
+                    }
                 </tr>
             }
         </tbody>
@@ -37,28 +47,12 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private List<EmployeeDTO>? employees;
+    private bool showNetSalary = true;
 
     protected override async Task OnInitializedAsync()
-    {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
-    }
-
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    {    
+        // employees = await DataHandler
+        //     .GetEmployeesAsync(@"C:\Projects\RecruitmentTask\RecruitmentTask.Console\Files\zadanie_soft_dev_PxCW.csv");
     }
 }
