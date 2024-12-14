@@ -1,42 +1,51 @@
 ﻿using RecruitmentTask.Calculator.Abstractions;
 using RecruitmentTask.Calculator.Models;
-using RecruitmentTask.Calculator.Rulers;
-using RecruitmentTask.Calculator.Rulers.Abstractions;
 using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Calculator
 {
     public class FilterCalculator : IFilterCalculator
     {
-        private readonly RulerHighestSalaryByCity RulerHighestSalaryByCity = new();
-        private readonly RulerHighestSalaryByJobLevel RulerHighestSalaryByJobLevel = new();
-        private readonly RulerTaxSalaryByCity RulerTaxSalaryByCity = new();
-
         public IEnumerable<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<Employee> employees)
         {
-            return FilterOrCalculate(employees, RulerHighestSalaryByCity);
+            return employees
+                .GroupBy(e => e.City)
+                .SelectMany(g =>
+                {
+                    var maxSalary = g.Max(e => e.Salary);
+                    return g
+                        .Where(e => e.Salary == maxSalary)
+                        .Select(e => new EmployeeDTO(e));
+                });
         }
 
         public IEnumerable<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<Employee> employees)
         {
-            return FilterOrCalculate(employees, RulerHighestSalaryByJobLevel);
+            return employees
+                .GroupBy(e => e.JobLevel)
+                .SelectMany(g =>
+                {
+                    var maxSalary = g.Max(e => e.Salary);
+                    return g
+                        .Where(e => e.Salary == maxSalary)
+                        .Select(e => new EmployeeDTO(e));
+                });
         }
 
         public IEnumerable<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<Employee> employees)
         {
-            return FilterOrCalculate(employees, RulerTaxSalaryByCity);
-        }
-
-        private IEnumerable<EmployeeDTO> FilterOrCalculate(IEnumerable<Employee> employees, RulerBase ruler)
-        {
-            foreach (var employee in employees)
-            {
-                var employeeCopy = employee.ShallowCopy();
-
-                ruler.Validate(employeeCopy);
-            }
-
-            return ruler.GetEmployees();
+            return employees
+                .GroupBy(e => e.City)
+                .SelectMany(g =>
+                {
+                    var minSalary = g.Min(e => e.Salary - e.Salary * (decimal)0.19);
+                    return g
+                        .Where(e => e.Salary - e.Salary * (decimal)0.19 == minSalary)
+                        .Select(e => new EmployeeDTO(e)
+                        {
+                            NetSalary = minSalary
+                        });
+                });
         }
     }
 }

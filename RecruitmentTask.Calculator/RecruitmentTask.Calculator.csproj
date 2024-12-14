@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RecruitmentTask.Core\RecruitmentTask.Core.csproj" />
+    <ProjectReference Include="..\RecruitmentTask.Core\RecruitmentTask.BuisnessLayer.csproj" />
   </ItemGroup>
 
 </Project>

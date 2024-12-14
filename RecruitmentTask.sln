@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Tests", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Calculator", "RecruitmentTask.Calculator\RecruitmentTask.Calculator.csproj", "{CA15F821-8A0D-4E12-8EBA-E89085533401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Core", "RecruitmentTask.Core\RecruitmentTask.Core.csproj", "{549854C3-74C5-48EA-833A-DBBA880F130E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.BuisnessLayer", "RecruitmentTask.Core\RecruitmentTask.BuisnessLayer.csproj", "{549854C3-74C5-48EA-833A-DBBA880F130E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Utility", "RecruitmentTask.Utility\RecruitmentTask.Utility.csproj", "{6EF5DA1A-CCA5-47D6-9C8A-3A3C939ABC24}"
 EndProject
