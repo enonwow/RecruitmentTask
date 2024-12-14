@@ -7,29 +7,14 @@ namespace RecruitmentTask.Tests
     public class ParserSCVTests
     {
         [Fact]
-        public async Task Parser_TryGetPath_DirectoryNotFoundException()
-        {
-            await Assert.ThrowsAsync<DirectoryNotFoundException>(async () =>
-            {
-                var parser = new ParserCSV();
-
-                var nullData = await parser.ReadEmployeesAsync("Wrong path");
-
-                foreach (var item in nullData)
-                {
-
-                }
-            });
-        }
-
-        [Fact]
         public async Task Parser_TrySerialize_HeaderValidationException()
         {
             await Assert.ThrowsAsync<HeaderValidationException>(async () =>
             {
                 var parser = new ParserCSV();
 
-                var nullData = await parser.ReadEmployeesAsync(@"Files\test_wrong_data.csv");
+                using var stream = new FileStream(@"Files\test_wrong_data.csv", FileMode.Open);
+                var nullData = await parser.ReadEmployeesAsync(stream);
 
                 foreach (var item in nullData)
                 {
@@ -43,7 +28,9 @@ namespace RecruitmentTask.Tests
         {
             var parser = new ParserCSV();
 
-            var employees = await parser.ReadEmployeesAsync(@"Files\test_data.csv");
+            using var stream = new FileStream(@"Files\test_data.csv", FileMode.Open);
+
+            var employees = await parser.ReadEmployeesAsync(stream);
             var emplyee = employees.First();
 
             Assert.Equal(1, emplyee.Id);

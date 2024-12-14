@@ -10,16 +10,9 @@ namespace RecruitmentTask.Utility
 {
     public class ParserCSV : IParserCSV
     {
-        public async Task<List<Employee>> ReadEmployeesAsync(string path)
+        public async Task<List<Employee>> ReadEmployeesAsync(Stream stream)
         {
-            var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
-
-            if (!Path.Exists(fullPath))
-            {
-                throw new DirectoryNotFoundException($"Could not find path {path}");
-            }
-
-            using var reader = new StreamReader(fullPath);
+            using var reader = new StreamReader(stream);
             using var csv = new CsvReader(reader,
                     new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 });
 

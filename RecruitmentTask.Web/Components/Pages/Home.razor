@@ -1,15 +1,16 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.Forms
 @using RecruitmentTask.Calculator.Models
 @using RecruitmentTask.DataAccess.Abstractions
 @* @attribute [StreamRendering] *@
 @inject IDataHandler DataHandler
 @rendermode InteractiveServer
 
-@if (employees == null)
-{
-    <p><em>Wybierz plik</em></p>
-}
-else
+<h3>Wybierz plik</h3>
+
+<InputFile OnChange="OnChangeFileAsync" accept=".csv" />
+
+@if (employees != null)
 {
     <table class="table">
         <thead>
@@ -52,7 +53,21 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // employees = await DataHandler
-        //     .GetEmployeesAsync(@"C:\Projects\RecruitmentTask\RecruitmentTask.Console\Files\zadanie_soft_dev_PxCW.csv");
+
+    }
+
+    private async Task OnChangeFileAsync(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            await using var stream = e.File.OpenReadStream();
+
+            employees = await DataHandler
+                .GetEmployeesAsync(stream);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

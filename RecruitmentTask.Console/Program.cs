@@ -3,7 +3,10 @@ using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Utility;
 
 var parser = new ParserCSV();
-var employees = await parser.ReadEmployeesAsync(@"Files\zadanie_soft_dev_PxCW.csv");
+
+using var stream = new FileStream(@"Files\zadanie_soft_dev_PxCW.csv", FileMode.Open);
+
+var employees = await parser.ReadEmployeesAsync(stream);
 
 var calcultor = new FilterCalculator();
 
@@ -30,13 +33,13 @@ void DisplayOptions()
         switch (keyChar)
         {
             case '1':
-                DisplayData(calcultor.GetHighestSalaryByCity(employees));
+                DisplayData(calcultor.GetHighestSalaryByCity(null));
                 break;
             case '2':
-                DisplayData(calcultor.GetHighestSalaryByJobLevel(employees));
+                DisplayData(calcultor.GetHighestSalaryByJobLevel(null));
                 break;
             case '3':
-                DisplayData(calcultor.GetTaxSalaryByCity(employees));
+                DisplayData(calcultor.GetTaxSalaryByCity(null));
                 break;
         }
 

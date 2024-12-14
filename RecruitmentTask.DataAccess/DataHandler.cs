@@ -21,9 +21,9 @@ namespace RecruitmentTask.DataAccess
             _dataCache = dataCache;
         }
 
-        public async Task<List<EmployeeDTO>> GetEmployeesAsync(string csvFile)
+        public async Task<List<EmployeeDTO>> GetEmployeesAsync(Stream stream)
         {
-            var employees = await _parserCSV.ReadEmployeesAsync(csvFile);
+            var employees = await _parserCSV.ReadEmployeesAsync(stream);
             _dataCache.SetFullData(employees);
 
             var employeesDTO = new List<EmployeeDTO>();
