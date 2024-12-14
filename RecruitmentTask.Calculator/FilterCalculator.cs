@@ -1,65 +1,42 @@
 ﻿using RecruitmentTask.Calculator.Abstractions;
 using RecruitmentTask.Calculator.Models;
 using RecruitmentTask.Calculator.Rulers;
+using RecruitmentTask.Calculator.Rulers.Abstractions;
 using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Calculator
 {
-    public class FilterCalculator : ICalculator
+    public class FilterCalculator : IFilterCalculator
     {
-        private readonly RulerHighestSalaryByCity RulerHighestSalaryByCity = new RulerHighestSalaryByCity();
-        private readonly RulerHighestSalaryByJobLevel RulerHighestSalaryByJobLevel = new RulerHighestSalaryByJobLevel();
-        private readonly RulerTaxSalaryByCity RulerTaxSalaryByCity = new RulerTaxSalaryByCity();
-
-        public async Task PrepareData(IAsyncEnumerable<Employee> employees)
-        {
-            await foreach (var employee in employees)
-            {
-                var employeeCopy = employee.ShallowCopy();
-
-                RulerHighestSalaryByCity.Validate(employeeCopy);
-                RulerHighestSalaryByJobLevel.Validate(employeeCopy);
-                RulerTaxSalaryByCity.Validate(employeeCopy);
-            }
-        }
+        private readonly RulerHighestSalaryByCity RulerHighestSalaryByCity = new();
+        private readonly RulerHighestSalaryByJobLevel RulerHighestSalaryByJobLevel = new();
+        private readonly RulerTaxSalaryByCity RulerTaxSalaryByCity = new();
 
         public IEnumerable<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<Employee> employees)
         {
-            foreach (var employee in employees)
-            {
-                var employeeCopy = employee.ShallowCopy();
-
-                RulerHighestSalaryByCity.Validate(employeeCopy);
-            }
-
-            return RulerHighestSalaryByCity
-                .GetEmployees();
+            return FilterOrCalculate(employees, RulerHighestSalaryByCity);
         }
 
         public IEnumerable<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<Employee> employees)
         {
-            foreach (var employee in employees)
-            {
-                var employeeCopy = employee.ShallowCopy();
-
-                RulerHighestSalaryByJobLevel.Validate(employeeCopy);
-            }
-
-            return RulerHighestSalaryByJobLevel
-                .GetEmployees();
+            return FilterOrCalculate(employees, RulerHighestSalaryByJobLevel);
         }
-        
+
         public IEnumerable<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<Employee> employees)
+        {
+            return FilterOrCalculate(employees, RulerTaxSalaryByCity);
+        }
+
+        private IEnumerable<EmployeeDTO> FilterOrCalculate(IEnumerable<Employee> employees, RulerBase ruler)
         {
             foreach (var employee in employees)
             {
                 var employeeCopy = employee.ShallowCopy();
 
-                RulerTaxSalaryByCity.Validate(employeeCopy);
+                ruler.Validate(employeeCopy);
             }
 
-            return RulerTaxSalaryByCity
-                .GetEmployees();
+            return ruler.GetEmployees();
         }
     }
 }
