@@ -2,7 +2,7 @@
 
 namespace RecruitmentTask.Tests
 {
-    internal static class CalculatorTestUtility
+    internal static class EmployeeServiceTestUtility
     {
         public static Employee CreateMockEmployee()
         {
