@@ -17,66 +17,66 @@ namespace RecruitmentTask.ApplicationLayer
             _dataCache = dataCache;
         }
 
-        public async Task<List<EmployeeDTO>> GetEmployeesAsync(Stream stream)
+        public async Task<List<EmployeeDTO>> GetEmployeesAsync(Stream stream, string sesionId)
         {
             var employees = await _employeeService.GetAllEmployeesAsync(stream);
-            _dataCache.SetFullData(employees);
+            _dataCache.SetFullData(sesionId, employees);
 
             return employees.ToList();
         }
 
-        public List<EmployeeDTO> GetAllEmployeesFromCache()
+        public List<EmployeeDTO> GetAllEmployeesFromCache(string sesionId)
         {
-            return _dataCache.GetFullData().ToList();
+            return _dataCache.GetFullData(sesionId).ToList();
         }
 
-        public List<EmployeeDTO> GetHighestSalaryByCity()
+        public List<EmployeeDTO> GetHighestSalaryByCity(string sesionId)
         {
-            if (_dataCache.TryGetValueHighestSalaryByCity(out var data))
+            if (_dataCache.TryGetValueHighestSalaryByCity(sesionId, out var data))
             {
                 return data.ToList();
             }
 
-            var employees = _dataCache.GetFullData();
+            var employees = _dataCache.GetFullData(sesionId);
 
             var newData = _employeeService
                 .GetHighestSalaryByCity(employees);
 
-            _dataCache.SetHighestSalaryByCity(newData);
+            _dataCache.SetHighestSalaryByCity(sesionId, newData);
 
             return newData.ToList();
         }
 
-        public List<EmployeeDTO> GetHighestSalaryByJobLevel()
+        public List<EmployeeDTO> GetHighestSalaryByJobLevel(string sesionId)
         {
-            if (_dataCache.TryGetValueHighestSalaryByJobLevel(out var data))
+            if (_dataCache.TryGetValueHighestSalaryByJobLevel(sesionId, out var data))
             {
                 return data.ToList();
             }
 
-            var employees = _dataCache.GetFullData();
+            var employees = _dataCache.GetFullData(sesionId);
 
             var newData = _employeeService
                 .GetHighestSalaryByJobLevel(employees);
 
-            _dataCache.SetHighestSalaryByJobLevel(newData);
+            _dataCache.SetHighestSalaryByJobLevel(sesionId, newData);
 
             return newData.ToList();
         }
 
-        public List<EmployeeDTO> GetTaxSalaryByCity()
+        public List<EmployeeDTO> GetTaxSalaryByCity(string sesionId)
         {
-            if (_dataCache.TryGetValueTaxSalaryByCity(out var data))
+            if (_dataCache.TryGetValueTaxSalaryByCity(sesionId, out var data))
             {
                 return data.ToList();
             }
 
-            var employees = _dataCache.GetFullData();
+            var employees = _dataCache.GetFullData(sesionId);
 
             var newData = _employeeService
                 .GetTaxSalaryByCity(employees);
 
-            _dataCache.SetTaxSalaryByCity(newData);
+            _dataCache.SetTaxSalaryByCity(sesionId, newData);
 
             return newData.ToList();
         }

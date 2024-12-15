@@ -18,44 +18,49 @@ namespace RecruitmentTask.ApplicationLayer
             _memoryCache = memoryCache;
         }
 
-        public IEnumerable<EmployeeDTO> GetFullData()
+        public IEnumerable<EmployeeDTO> GetFullData(string sessionId)
         {
-            return _memoryCache.Get<IEnumerable<EmployeeDTO>>(FullData);
+            return _memoryCache.Get<IEnumerable<EmployeeDTO>>(GetKey(sessionId, FullData));
         }
 
-        public void SetFullData(IEnumerable<EmployeeDTO> employees)
+        public void SetFullData(string sessionId, IEnumerable<EmployeeDTO> employees)
         {
-            _memoryCache.Set(FullData, employees);
+            _memoryCache.Set(GetKey(sessionId, FullData), employees);
         }
 
-        public bool TryGetValueHighestSalaryByCity(out IEnumerable<EmployeeDTO> employees)
+        public bool TryGetValueHighestSalaryByCity(string sessionId, out IEnumerable<EmployeeDTO> employees)
         {
-            return _memoryCache.TryGetValue(HighestSalaryByCity, out employees);
+            return _memoryCache.TryGetValue(GetKey(sessionId, HighestSalaryByCity), out employees);
         }
 
-        public void SetHighestSalaryByCity(IEnumerable<EmployeeDTO> employees)
+        public void SetHighestSalaryByCity(string sessionId, IEnumerable<EmployeeDTO> employees)
         {
-            _memoryCache.Set(HighestSalaryByCity, employees);
+            _memoryCache.Set(GetKey(sessionId, HighestSalaryByCity), employees);
         }
 
-        public bool TryGetValueHighestSalaryByJobLevel(out IEnumerable<EmployeeDTO> employees)
+        public bool TryGetValueHighestSalaryByJobLevel(string sessionId, out IEnumerable<EmployeeDTO> employees)
         {
-            return _memoryCache.TryGetValue(HighestSalaryByJobLevel, out employees);
+            return _memoryCache.TryGetValue(GetKey(sessionId, HighestSalaryByJobLevel), out employees);
         }
 
-        public void SetHighestSalaryByJobLevel(IEnumerable<EmployeeDTO> employees)
+        public void SetHighestSalaryByJobLevel(string sessionId, IEnumerable<EmployeeDTO> employees)
         {
-            _memoryCache.Set(HighestSalaryByJobLevel, employees);
+            _memoryCache.Set(GetKey(sessionId, HighestSalaryByJobLevel), employees);
         }
 
-        public bool TryGetValueTaxSalaryByCity(out IEnumerable<EmployeeDTO> employees)
+        public bool TryGetValueTaxSalaryByCity(string sessionId, out IEnumerable<EmployeeDTO> employees)
         {
-            return _memoryCache.TryGetValue(TaxSalaryByCity, out employees);
+            return _memoryCache.TryGetValue(GetKey(sessionId, TaxSalaryByCity), out employees);
         }
 
-        public void SetTaxSalaryByCity(IEnumerable<EmployeeDTO> employees)
+        public void SetTaxSalaryByCity(string sessionId, IEnumerable<EmployeeDTO> employees)
         {
-            _memoryCache.Set(TaxSalaryByCity, employees);
+            _memoryCache.Set(GetKey(sessionId, TaxSalaryByCity), employees);
+        }
+
+        private string GetKey(string sessionId, string key)
+        {
+            return $"{sessionId}-{key}";
         }
     }
 }

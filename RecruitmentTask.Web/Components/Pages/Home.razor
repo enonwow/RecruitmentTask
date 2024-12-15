@@ -4,6 +4,7 @@
 @using RecruitmentTask.ApplicationLayer.Abstractions
 @using RecruitmentTask.BuisnessLayer.Models
 @inject IEmployeeAppService EmployeeAppService
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @rendermode InteractiveServer
 
 <h3>Wybierz plik</h3>
@@ -138,7 +139,7 @@
             await using var stream = e.File.OpenReadStream();
 
             employees = await EmployeeAppService
-                .GetEmployeesAsync(stream);
+                .GetEmployeesAsync(stream, HttpContextAccessor.HttpContext.Session.Id);
         }
         catch (HeaderValidationException)
         {
@@ -157,19 +158,19 @@
         switch(selectedId)
         {
             case 0:
-                employees = EmployeeAppService.GetAllEmployeesFromCache();
+                employees = EmployeeAppService.GetAllEmployeesFromCache(HttpContextAccessor.HttpContext.Session.Id);
                 showNetSalary = false;
                 break;
             case 1:
-                employees = EmployeeAppService.GetHighestSalaryByCity();
+                employees = EmployeeAppService.GetHighestSalaryByCity(HttpContextAccessor.HttpContext.Session.Id);
                 showNetSalary = false;
                 break;
             case 2:
-                employees = EmployeeAppService.GetHighestSalaryByJobLevel();
+                employees = EmployeeAppService.GetHighestSalaryByJobLevel(HttpContextAccessor.HttpContext.Session.Id);
                 showNetSalary = false;
                 break;
             case 3:
-                employees = EmployeeAppService.GetTaxSalaryByCity();
+                employees = EmployeeAppService.GetTaxSalaryByCity(HttpContextAccessor.HttpContext.Session.Id);
                 showNetSalary = true;
                 break;
         }
