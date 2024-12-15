@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-namespace RecruitmentTask.Utility.Mapers
+namespace RecruitmentTask.DataAccessLayer.Mapers
 {
     internal class EmployeeMap : ClassMap<Employee>
     {

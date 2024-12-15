@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RecruitmentTask.Core
+﻿namespace RecruitmentTask.DataAccessLayer
 {
     public class Employee
     {

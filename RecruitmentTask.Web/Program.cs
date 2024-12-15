@@ -1,9 +1,9 @@
-using RecruitmentTask.Calculator;
-using RecruitmentTask.Calculator.Abstractions;
-using RecruitmentTask.DataAccess;
-using RecruitmentTask.DataAccess.Abstractions;
-using RecruitmentTask.Utility;
-using RecruitmentTask.Utility.Abstractions;
+using RecruitmentTask.ApplicationLayer;
+using RecruitmentTask.ApplicationLayer.Abstractions;
+using RecruitmentTask.BuisnessLayer;
+using RecruitmentTask.BuisnessLayer.Abstractions;
+using RecruitmentTask.DataAccessLayer;
+using RecruitmentTask.DataAccessLayer.Abstractions;
 using RecruitmentTask.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,10 +13,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services
-    .AddSingleton<IDataHandler, DataHandler>()
-    .AddSingleton<IParserCSV, ParserCSV>()
-    .AddSingleton<IFilterCalculator, FilterCalculator>()
-    .AddSingleton<IDataCache, DataCache>()
+    .AddTransient<IDataContext, DataContext>()
+    .AddTransient<IEmployeeRepository, EmployeeRepository>()
+    .AddTransient<IEmployeeService, EmployeeService>()
+    .AddScoped<IDataCache, DataCache>()
+    .AddTransient<IEmployeeAppService, EmployeeAppService>()
     .AddMemoryCache();
 
 var app = builder.Build();

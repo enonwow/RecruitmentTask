@@ -1,5 +1,5 @@
-﻿using RecruitmentTask.Calculator.Abstractions;
-using RecruitmentTask.Calculator.Models;
+﻿using RecruitmentTask.BuisnessLayer.Models;
+using RecruitmentTask.Calculator.Abstractions;
 using RecruitmentTask.Core;
 
 namespace RecruitmentTask.Calculator

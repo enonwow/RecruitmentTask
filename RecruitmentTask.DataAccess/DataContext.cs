@@ -1,15 +1,15 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using RecruitmentTask.Utility.Abstractions;
-using RecruitmentTask.Utility.Mapers;
+using RecruitmentTask.DataAccessLayer.Abstractions;
+using RecruitmentTask.DataAccessLayer.Mapers;
 using System.Globalization;
 using System.Text;
 
-namespace RecruitmentTask.Utility
+namespace RecruitmentTask.DataAccessLayer
 {
-    public class ParserCSV : IParserCSV
+    public class DataContext : IDataContext
     {
-        public async Task<List<Employee>> ReadEmployeesAsync(Stream stream)
+        public async Task<IEnumerable<Employee>> ReadEmployeesAsync(Stream stream)
         {
             using var reader = new StreamReader(stream);
             using var csv = new CsvReader(reader,

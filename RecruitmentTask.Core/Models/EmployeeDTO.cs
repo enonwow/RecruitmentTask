@@ -1,6 +1,6 @@
-﻿using RecruitmentTask.Core;
+﻿using RecruitmentTask.DataAccessLayer;
 
-namespace RecruitmentTask.Calculator.Models
+namespace RecruitmentTask.BuisnessLayer.Models
 {
     public class EmployeeDTO
     {

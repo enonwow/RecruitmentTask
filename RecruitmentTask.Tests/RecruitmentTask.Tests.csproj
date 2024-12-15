@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RecruitmentTask.DataAccess\RecruitmentTask.DataAccess.csproj" />
+    <ProjectReference Include="..\RecruitmentTask.ApplicationLayer\RecruitmentTask.ApplicationLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

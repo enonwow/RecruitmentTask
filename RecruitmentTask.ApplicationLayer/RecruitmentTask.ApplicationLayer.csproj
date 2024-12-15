@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RecruitmentTask.DataAccess\RecruitmentTask.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\RecruitmentTask.Core\RecruitmentTask.BuisnessLayer.csproj" />
   </ItemGroup>
 
 </Project>

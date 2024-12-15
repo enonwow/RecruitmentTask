@@ -1,4 +1,4 @@
-﻿using RecruitmentTask.Core;
+﻿using RecruitmentTask.DataAccessLayer;
 
 namespace RecruitmentTask.Tests
 {

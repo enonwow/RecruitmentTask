@@ -1,8 +1,8 @@
-﻿using RecruitmentTask.Calculator.Models;
+﻿using RecruitmentTask.BuisnessLayer.Models;
 
-namespace RecruitmentTask.DataAccess.Abstractions
+namespace RecruitmentTask.ApplicationLayer.Abstractions
 {
-    public interface IDataHandler
+    public interface IEmployeeAppService
     {
         Task<List<EmployeeDTO>> GetEmployeesAsync(Stream stream);
         List<EmployeeDTO> GetAllEmployeesFromCache();

@@ -1,4 +1,4 @@
-﻿using RecruitmentTask.Calculator.Models;
+﻿using RecruitmentTask.BuisnessLayer.Models;
 using System.Diagnostics.CodeAnalysis;
 
 namespace RecruitmentTask.Tests.Comparers
