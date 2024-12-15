@@ -5,9 +5,9 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Tests", "RecruitmentTask.Tests\RecruitmentTask.Tests.csproj", "{4172EC0A-A8F2-4F16-B8FA-B1F19C4B115C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.BuisnessLayer", "RecruitmentTask.Core\RecruitmentTask.BuisnessLayer.csproj", "{549854C3-74C5-48EA-833A-DBBA880F130E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.BuisnessLayer", "RecruitmentTask.BuisnessLayer\RecruitmentTask.BuisnessLayer.csproj", "{549854C3-74C5-48EA-833A-DBBA880F130E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.DataAccessLayer", "RecruitmentTask.DataAccess\RecruitmentTask.DataAccessLayer.csproj", "{7589575E-F58D-4469-81A6-735AC3934A61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.DataAccessLayer", "RecruitmentTask.DataAccessLayer\RecruitmentTask.DataAccessLayer.csproj", "{7589575E-F58D-4469-81A6-735AC3934A61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentTask.Web", "RecruitmentTask.Web\RecruitmentTask.Web.csproj", "{A1B2D5E4-064A-4CB6-A4E6-057C59BD2952}"
 EndProject
