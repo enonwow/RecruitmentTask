@@ -2,6 +2,6 @@
 {
     public interface IDataContext
     {
-        Task<IEnumerable<Employee>> ReadEmployeesAsync(Stream stream);
+        IAsyncEnumerable<Employee> ReadEmployeesAsync(Stream stream);
     }
 }

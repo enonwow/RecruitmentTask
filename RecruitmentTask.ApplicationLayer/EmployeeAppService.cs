@@ -19,22 +19,24 @@ namespace RecruitmentTask.ApplicationLayer
 
         public async Task<List<EmployeeDTO>> GetEmployeesAsync(Stream stream, string sesionId)
         {
-            var employees = await _employeeService.GetAllEmployeesAsync(stream);
+            var employeesAsync = _employeeService.GetAllEmployeesAsync(stream);
+            var employees = await employeesAsync.ToListAsync();
+
             _dataCache.SetFullData(sesionId, employees);
 
-            return employees.ToList();
+            return employees;
         }
 
         public List<EmployeeDTO> GetAllEmployeesFromCache(string sesionId)
         {
-            return _dataCache.GetFullData(sesionId).ToList();
+            return _dataCache.GetFullData(sesionId);
         }
 
         public List<EmployeeDTO> GetHighestSalaryByCity(string sesionId)
         {
             if (_dataCache.TryGetValueHighestSalaryByCity(sesionId, out var data))
             {
-                return data.ToList();
+                return data;
             }
 
             var employees = _dataCache.GetFullData(sesionId);
@@ -44,14 +46,14 @@ namespace RecruitmentTask.ApplicationLayer
 
             _dataCache.SetHighestSalaryByCity(sesionId, newData);
 
-            return newData.ToList();
+            return newData;
         }
 
         public List<EmployeeDTO> GetHighestSalaryByJobLevel(string sesionId)
         {
             if (_dataCache.TryGetValueHighestSalaryByJobLevel(sesionId, out var data))
             {
-                return data.ToList();
+                return data;
             }
 
             var employees = _dataCache.GetFullData(sesionId);
@@ -61,14 +63,14 @@ namespace RecruitmentTask.ApplicationLayer
 
             _dataCache.SetHighestSalaryByJobLevel(sesionId, newData);
 
-            return newData.ToList();
+            return newData;
         }
 
         public List<EmployeeDTO> GetTaxSalaryByCity(string sesionId)
         {
             if (_dataCache.TryGetValueTaxSalaryByCity(sesionId, out var data))
             {
-                return data.ToList();
+                return data;
             }
 
             var employees = _dataCache.GetFullData(sesionId);
@@ -78,7 +80,7 @@ namespace RecruitmentTask.ApplicationLayer
 
             _dataCache.SetTaxSalaryByCity(sesionId, newData);
 
-            return newData.ToList();
+            return newData;
         }
     }
 }

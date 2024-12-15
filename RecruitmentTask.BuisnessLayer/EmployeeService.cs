@@ -13,14 +13,17 @@ namespace RecruitmentTask.BuisnessLayer
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<IEnumerable<EmployeeDTO>> GetAllEmployeesAsync(Stream stream)
+        public async IAsyncEnumerable<EmployeeDTO> GetAllEmployeesAsync(Stream stream)
         {
-            var employees = await _employeeRepository.GetAllEmployeesAsync(stream);
+            var employees = _employeeRepository.GetAllEmployeesAsync(stream);
 
-            return employees.Select(e => new EmployeeDTO(e));
+            await foreach (var employee in employees)
+            {
+                yield return new EmployeeDTO(employee);
+            }
         }
 
-        public IEnumerable<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<EmployeeDTO> employees)
+        public List<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<EmployeeDTO> employees)
         {
             return employees
                 .GroupBy(e => e.City)
@@ -28,10 +31,11 @@ namespace RecruitmentTask.BuisnessLayer
                 {
                     var maxSalary = g.Max(e => e.Salary);
                     return g.Where(e => e.Salary == maxSalary);
-                });
+                })
+                .ToList();
         }
 
-        public IEnumerable<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<EmployeeDTO> employees)
+        public List<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<EmployeeDTO> employees)
         {
             return employees
                 .GroupBy(e => e.JobLevel)
@@ -40,10 +44,11 @@ namespace RecruitmentTask.BuisnessLayer
                     var maxSalary = g.Max(e => e.Salary);
                     return g
                         .Where(e => e.Salary == maxSalary);
-                });
+                })
+                .ToList();
         }
 
-        public IEnumerable<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<EmployeeDTO> employees)
+        public List<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<EmployeeDTO> employees)
         {
             return employees
                 .GroupBy(e => e.City)
@@ -57,7 +62,8 @@ namespace RecruitmentTask.BuisnessLayer
                             e.NetSalary = minSalary;
                             return e;
                         });
-                });
+                })
+                .ToList();
         }
     }
 }

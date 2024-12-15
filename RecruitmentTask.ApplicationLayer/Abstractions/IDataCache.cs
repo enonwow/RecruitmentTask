@@ -4,13 +4,13 @@ namespace RecruitmentTask.ApplicationLayer.Abstractions
 {
     public interface IDataCache
     {
-        IEnumerable<EmployeeDTO> GetFullData(string sessionId);
-        void SetFullData(string sessionId, IEnumerable<EmployeeDTO> employees);
-        bool TryGetValueHighestSalaryByCity(string sessionId, out IEnumerable<EmployeeDTO> employees);
-        void SetHighestSalaryByCity(string sessionId, IEnumerable<EmployeeDTO> employees);
-        bool TryGetValueHighestSalaryByJobLevel(string sessionId, out IEnumerable<EmployeeDTO> employees);
-        void SetHighestSalaryByJobLevel(string sessionId, IEnumerable<EmployeeDTO> employees);
-        bool TryGetValueTaxSalaryByCity(string sessionId, out IEnumerable<EmployeeDTO> employees);
-        void SetTaxSalaryByCity(string sessionId, IEnumerable<EmployeeDTO> employees);
+        List<EmployeeDTO> GetFullData(string sessionId);
+        void SetFullData(string sessionId, List<EmployeeDTO> employees);
+        bool TryGetValueHighestSalaryByCity(string sessionId, out List<EmployeeDTO> employees);
+        void SetHighestSalaryByCity(string sessionId, List<EmployeeDTO> employees);
+        bool TryGetValueHighestSalaryByJobLevel(string sessionId, out List<EmployeeDTO> employees);
+        void SetHighestSalaryByJobLevel(string sessionId, List<EmployeeDTO> employees);
+        bool TryGetValueTaxSalaryByCity(string sessionId, out List<EmployeeDTO> employees);
+        void SetTaxSalaryByCity(string sessionId, List<EmployeeDTO> employees);
     }
 }

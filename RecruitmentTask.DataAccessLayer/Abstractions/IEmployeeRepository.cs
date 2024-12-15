@@ -2,6 +2,6 @@
 {
     public interface IEmployeeRepository
     {
-        Task<IEnumerable<Employee>> GetAllEmployeesAsync(Stream stream);
+        IAsyncEnumerable<Employee> GetAllEmployeesAsync(Stream stream);
     }
 }

@@ -4,9 +4,9 @@ namespace RecruitmentTask.BuisnessLayer.Abstractions
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<EmployeeDTO>> GetAllEmployeesAsync(Stream stream);
-        IEnumerable<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<EmployeeDTO> employees);
-        IEnumerable<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<EmployeeDTO> employees);
-        IEnumerable<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<EmployeeDTO> employees);
+        IAsyncEnumerable<EmployeeDTO> GetAllEmployeesAsync(Stream stream);
+        List<EmployeeDTO> GetHighestSalaryByCity(IEnumerable<EmployeeDTO> employees);
+        List<EmployeeDTO> GetHighestSalaryByJobLevel(IEnumerable<EmployeeDTO> employees);
+        List<EmployeeDTO> GetTaxSalaryByCity(IEnumerable<EmployeeDTO> employees);
     }
 }

@@ -16,23 +16,13 @@ namespace RecruitmentTask.Tests
             var employeeRepositoryMock = new Mock<IEmployeeRepository>();
             employeeRepositoryMock
                 .Setup(r => r.GetAllEmployeesAsync(It.IsAny<Stream>()))
-                .ReturnsAsync(new List<Employee>()
-                {
-                    new Employee()
-                    {
-                        Id = 1,
-                        Name = "Mateusz",
-                        Surname = "Test",
-                        City = "Warszawa",
-                        Salary = 1000,
-                        JobLevel = "S1"
-                    }
-                });
+                .Returns(EmployeeServiceTestUtility.CreateMockIAsyncEnumerable());
 
             var employeeService = new EmployeeService(employeeRepositoryMock.Object);
             var employee = EmployeeServiceTestUtility.CreateMockEmployee();
 
-            var result = await employeeService.GetAllEmployeesAsync(null);
+            var resultAsync = employeeService.GetAllEmployeesAsync(null);
+            var result = await resultAsync.ToListAsync();
             var firstResult = result.First();
 
             Assert.NotNull(firstResult);

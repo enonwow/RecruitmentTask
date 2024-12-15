@@ -13,10 +13,10 @@ namespace RecruitmentTask.Tests
             {
                 var dataContext = new DataContext();
 
-                using var stream = new FileStream(@"Files\test_wrong_data.csv", FileMode.Open);
-                var nullData = await dataContext.ReadEmployeesAsync(stream);
+                await using var stream = new FileStream(@"Files\test_wrong_data.csv", FileMode.Open);
+                var nullData = dataContext.ReadEmployeesAsync(stream);
 
-                foreach (var item in nullData)
+                await foreach(var item in nullData)
                 {
 
                 }
@@ -28,9 +28,10 @@ namespace RecruitmentTask.Tests
         {
             var dataContext = new DataContext();
 
-            using var stream = new FileStream(@"Files\test_data.csv", FileMode.Open);
+            await using var stream = new FileStream(@"Files\test_data.csv", FileMode.Open);
 
-            var employees = await dataContext.ReadEmployeesAsync(stream);
+            var employeesAsync =  dataContext.ReadEmployeesAsync(stream);
+            var employees = await employeesAsync.ToListAsync();
             var emplyee = employees.First();
 
             Assert.Equal(1, emplyee.Id);

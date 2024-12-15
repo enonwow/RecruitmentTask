@@ -11,9 +11,14 @@ namespace RecruitmentTask.DataAccessLayer
             _dataContext = dataContext;
         }
 
-        public async Task<IEnumerable<Employee>> GetAllEmployeesAsync(Stream stream)
+        public async IAsyncEnumerable<Employee> GetAllEmployeesAsync(Stream stream)
         {
-            return await _dataContext.ReadEmployeesAsync(stream);
+            var employees = _dataContext.ReadEmployeesAsync(stream);
+
+            await foreach (var employee in employees)
+            {
+                yield return employee;
+            }
         }
     }
 }

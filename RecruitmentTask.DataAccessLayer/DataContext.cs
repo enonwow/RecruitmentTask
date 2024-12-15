@@ -9,7 +9,7 @@ namespace RecruitmentTask.DataAccessLayer
 {
     public class DataContext : IDataContext
     {
-        public async Task<IEnumerable<Employee>> ReadEmployeesAsync(Stream stream)
+        public async IAsyncEnumerable<Employee> ReadEmployeesAsync(Stream stream)
         {
             using var reader = new StreamReader(stream);
             using var csv = new CsvReader(reader,
@@ -19,7 +19,10 @@ namespace RecruitmentTask.DataAccessLayer
 
             var employees = csv.GetRecordsAsync<Employee>();
 
-            return await employees.ToListAsync();
+            await foreach (var employee in employees)
+            {
+                yield return employee;
+            }
         }
     }
 }

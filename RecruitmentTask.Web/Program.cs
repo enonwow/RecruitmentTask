@@ -16,7 +16,7 @@ builder.Services
     .AddTransient<IDataContext, DataContext>()
     .AddTransient<IEmployeeRepository, EmployeeRepository>()
     .AddTransient<IEmployeeService, EmployeeService>()
-    .AddScoped<IDataCache, DataCache>()
+    .AddSingleton<IDataCache, DataCache>()
     .AddTransient<IEmployeeAppService, EmployeeAppService>()
     .AddMemoryCache();
 
